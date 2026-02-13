@@ -1,10 +1,10 @@
 """
-Pydantic Schemas for the InsightBench Multi-Agent System.
+Pydantic Output Schemas for the InsightBench Multi-Agent System.
 Each schema defines the structured output format for the corresponding agent.
 """
 
-from pydantic import BaseModel, Field
 from typing import List, Optional
+from pydantic import BaseModel, Field
 
 
 # ============================================================================
@@ -12,10 +12,10 @@ from typing import List, Optional
 # ============================================================================
 class SchemaExtraction(BaseModel):
     """Extracted content structure from the video."""
-    scene_length: str = Field(description="Szenenlänge – Schnelle Cuts oder lange Takes?")
-    hook_type: str = Field(description="Hook-Typ – Was passiert in den ersten 3 Sekunden? (Frage, Schock, Neugier, Statement, visueller Reiz)")
-    visual_frequency: str = Field(description="Visuelle Frequenz – Wie oft wechseln visuelle Elemente?")
-    unique_visual_elements: str = Field(description="Einzigartige visuelle Elemente – Was hebt diesen Content visuell ab?")
+    scene_length: str = Field(description="Scene length – Fast cuts or long takes?")
+    hook_type: str = Field(description="Hook type – What happens in the first 3 seconds? (Question, Shock, Curiosity, Statement, Visual stimulus)")
+    visual_frequency: str = Field(description="Visual frequency – How often do visual elements change?")
+    unique_visual_elements: str = Field(description="Unique visual elements – What makes this content stand out visually?")
 
 
 class VideoAnalysisSchema(BaseModel):
@@ -29,10 +29,10 @@ class VideoAnalysisSchema(BaseModel):
 # ============================================================================
 class AnalysisLevels(BaseModel):
     """The 4 analysis levels for each Root Question."""
-    descriptive: str = Field(description="Deskriptiv: Was wurde genau gezeigt?")
-    diagnostic: str = Field(description="Diagnostisch: Warum fesselt dieser Moment?")
-    predictive: str = Field(description="Prädiktiv: Welche Retention-Rate ist zu erwarten?")
-    prescriptive: str = Field(description="Präskriptiv: Welche Änderung maximiert den Erfolg?")
+    descriptive: str = Field(description="Descriptive: What was shown exactly?")
+    diagnostic: str = Field(description="Diagnostic: Why does this moment captivate?")
+    predictive: str = Field(description="Predictive: What retention rate is expected?")
+    prescriptive: str = Field(description="Prescriptive: What change would maximize success?")
 
 
 class FollowUpQuestion(BaseModel):
@@ -71,7 +71,6 @@ class CreatorOutputSchema(BaseModel):
     """Output schema for the Creator Agent."""
     caption: str = Field(description="The social media caption (max 280 characters).", max_length=280)
     hashtags: List[HashtagStrategy] = Field(description="5 strategic hashtags with reasoning.", min_length=5, max_length=5)
-    strategic_justification: str = Field(description="Why this caption and hashtags embody the 'Last Mover' logic.")
 
 
 # ============================================================================
@@ -88,7 +87,7 @@ class EvaluationSchema(BaseModel):
     """Output schema for the Evaluator Agent."""
     overall_rating: int = Field(description="Overall rating from 1 to 10.", ge=1, le=10)
     criteria: List[EvaluationCriterion] = Field(
-        description="Individual scores for: Faktentreue, Trend-Aktualität, Strategische Tiefe, Kreative Originalität, Anti-Halluzination.",
+        description="Individual scores for: Factual Accuracy, Trend Relevance, Strategic Depth, Creative Originality, Anti-Hallucination.",
         min_length=5,
         max_length=5,
     )
