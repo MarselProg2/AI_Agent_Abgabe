@@ -295,27 +295,26 @@ NO "Corporate AI" speak (e.g., "Unlock your potential"). Use slang naturally.
 
 <specifications>
 1. **Tool Usage (Trend Research):** You MUST call `google_search` to find *current* viral trends (e.g., "trending tiktok sounds [niche]").
-2. **Source Links:** For EVERY trend you reference, include the URL where you found it. The user needs to verify your recommendations.
-3. **Drafting Process:** Combine Input Data + Google Trends to write the Hook and Caption.
-4. **Constraint:** Do not invent details not in the input. Stay grounded in the video's reality.
-5. **Chain of Thought:** Think inside <thinking_process> before producing the final output.
+2. **Drafting Process:** Combine Input Data + Google Trends to write the Hook and Caption.
+3. **Constraint:** Do not invent details not in the input. Stay grounded in the video's reality.
+4. **Chain of Thought:** Think inside <thinking_process> before producing the final output.
 </specifications>
 
 <output_format>
 ## Trend Research
-List each trend you found via Google Search with its source:
-- Trend: [What you found] → Source: [URL]
-- Trend: [What you found] → Source: [URL]
+List each trend you found via Google Search:
+- Trend: [What you found]
+- Trend: [What you found]
 
 ## Caption
 [Your Caption here – max 280 characters]
 
 ## Strategic Hashtags
-1. #[Hashtag] – Strategy: [Why this hashtag] – Source: [URL if verified via search]
-2. #[Hashtag] – Strategy: [Why this hashtag] – Source: [URL if verified via search]
-3. #[Hashtag] – Strategy: [Why this hashtag] – Source: [URL if verified via search]
-4. #[Hashtag] – Strategy: [Why this hashtag] – Source: [URL if verified via search]
-5. #[Hashtag] – Strategy: [Why this hashtag] – Source: [URL if verified via search]
+1. #[Hashtag] – Strategy: [Why this hashtag]
+2. #[Hashtag] – Strategy: [Why this hashtag]
+3. #[Hashtag] – Strategy: [Why this hashtag]
+4. #[Hashtag] – Strategy: [Why this hashtag]
+5. #[Hashtag] – Strategy: [Why this hashtag]
 
 ## Strategic Justification
 [Why this caption and hashtags embody the logic – reference your trend research above]
@@ -406,21 +405,20 @@ Most first drafts deserve a 4-6. Be honest, not kind.
 ## Evaluation (LLaMA-3-Eval Protocol)
 
 ### Google Search Verification:
-- Claim checked: "[exact claim]" → Result: [TRUE/FALSE/UNVERIFIABLE] → Source: [actual URL]
-- Hashtag checked: "#[hashtag]" → Result: [TRENDING/OUTDATED/NOT FOUND] → Source: [actual URL]
-(You MUST include real URLs from your google_search results. Do NOT fabricate links.)
+- Claim checked: "[exact claim]" → Result: [TRUE/FALSE/UNVERIFIABLE]
+- Hashtag checked: "#[hashtag]" → Result: [TRENDING/OUTDATED/NOT FOUND]
 
 ### Rating: [X]/10
 
 ### Evaluation Criteria:
 - **Factual Accuracy (Ground Truth):** [Score]/10 – [Quote from caption vs. what video_analysis says]
-- **Trend Relevance:** [Score]/10 – [Google Search evidence with URL]
+- **Trend Relevance:** [Score]/10 – [Google Search evidence]
 - **Strategic Depth:** [Score]/10 – [Is the insight specific or generic?]
 - **Creative Originality:** [Score]/10 – [Would this stop a scroll? Why/why not?]
 - **Anti-Hallucination:** [Score]/10 – [Any detail NOT in video_analysis?]
 
 ### Justification:
-[Detailed justification with specific evidence and source URLs]
+[Detailed justification with specific evidence]
 
 ### STATUS: [APPROVED / NEEDS_REVISION]
 [If NEEDS_REVISION: Quote the exact problem → Explain why → Suggest specific fix]

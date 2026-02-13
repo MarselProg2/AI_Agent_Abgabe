@@ -1,0 +1,1223 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+.python-version
+agent_evaluation_smart_goals.md
+pyproject.toml
+README.md
+root_agent/__init__.py
+root_agent/.adk/eval_history/root_agent_evalset1_test_1770937548.862488.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalset1_test_1770937623.8739483.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalset1_test_1770939314.5721912.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalset1_test_1770939314.6174903.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalset1_test_1770939704.702254.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalset2_1770940087.28331.evalset_result.json
+root_agent/.adk/eval_history/root_agent_evalsetad11df_1770980962.4431028.evalset_result.json
+root_agent/.gitignore
+root_agent/agent.py
+root_agent/evalset1_test.evalset.json
+root_agent/evalset2.evalset.json
+root_agent/evalsetad11df.evalset.json
+root_agent/schemas.py
+root_agent/test/msg.py
+root_agent/test/scenarios_test.json
+txt.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="agent_evaluation_smart_goals.md">
+# SMART-Ziele zur Evaluierung der InsightBench-Agenten
+
+Dieses Dokument definiert spezifische, messbare, erreichbare, relevante und zeitgebundene (SMART) Ziele, um die Leistung der einzelnen KI-Agenten im System objektiv zu bewerten.
+
+---
+
+## 1. Video Analyst Agent (Wahrnehmung & Schema-Extraktion)
+**Ziel:** Präzise Extraktion visueller Daten als Basis für die weitere Verarbeitung.
+
+| Kriterium | Beschreibung |
+| :--- | :--- |
+| **S (Spezifisch)** | Der Agent soll visuelle Schlüsselelemente (`hook_type`, `scene_length`, `unique_visual_elements`) korrekt identifizieren und klassifizieren. |
+| **M (Messbar)** | **Genauigkeit > 90%** im Vergleich zu manuell annotierten Ground-Truth-Daten (Test-Set von 50 Videos). <br> **Schema-Validität:** 100% valide JSON-Struktur gemäß `VideoAnalysisSchema`. |
+| **A (Erreichbar)** | Durch Nutzung von Gemini 2.0 Flash Vision und striktem Pydantic-Output-Schema. |
+| **R (Relevant)** | Fehlerhafte Eingangsdaten führen zu fehlerhaften Strategien in nachgelagerten Agenten (Garbage In, Garbage Out). |
+| **T (Zeitgebunden)** | Die Analyse muss im Durchschnitt **unter 5 Sekunden** pro Video abgeschlossen sein. |
+
+---
+
+## 2. Insight Extractor Agent (Logik & Strategie)
+**Ziel:** Ableitung tiefergehender, logisch konsistenter Strategien aus Rohdaten.
+
+| Kriterium | Beschreibung |
+| :--- | :--- |
+| **S (Spezifisch)** | Der Agent muss für jede `Root Question` eine 4-Ebenen-Analyse (Descriptive, Diagnostic, Predictive, Prescriptive) durchführen, die in sich schlüssig ist. |
+| **M (Messbar)** | **Logische Konsistenz:** < 5% Widersprüche zwischen `Descriptive` und `Prescriptive` Ebene (manuelle Stichprobe). <br> **Vollständigkeit:** 100% der `Root Questions` müssen vollständig analysiert sein (keine leeren Felder). |
+| **A (Erreichbar)** | Durch Multi-Step-Reasoning Prompts und strukturierte `AnalysisLevels`-Modelle. |
+| **R (Relevant)** | Kritisch für die Qualität der Content-Strategie; oberflächliche Analyse führt zu generischem Content. |
+| **T (Zeitgebunden)** | Die Synthese aller Insights muss **unter 10 Sekunden** erfolgen. |
+
+---
+
+## 3. Creator Agent (Kreativität & Trend-Alignment)
+**Ziel:** Generierung von viralem, plattformgerechtem Content.
+
+| Kriterium | Beschreibung |
+| :--- | :--- |
+| **S (Spezifisch)** | Erstellung von Captions und Hashtags, die aktuelle Trends aufgreifen und die strategischen Vorgaben umsetzen. |
+| **M (Messbar)** | **Erfolgsquote:** > 80% der Generierungen erreichen im ersten Durchlauf einen Evaluator-Score von **≥ 7/10**. <br> **Trend-Validität:** 100% der genutzten Trends sind laut Google Search aktuell (< 30 Tage). |
+| **A (Erreichbar)** | Durch Zugriff auf Google Search Tools und Feedback-Schleifen. |
+| **R (Relevant)** | Maximiert das potenzielle User-Engagement (Likes, Shares) und die Sichtbarkeit. |
+| **T (Zeitgebunden)** | Generierung inkl. Trend-Recherche **unter 8 Sekunden**. |
+
+---
+
+## 4. Evaluator Agent (Qualitätssicherung & Sicherheit)
+**Ziel:** Zuverlässige Erkennung von Fehlern und Halluzinationen.
+
+| Kriterium | Beschreibung |
+| :--- | :--- |
+| **S (Spezifisch)** | Der Agent soll kritisch prüfen, ob der generierte Content Fakten enthält, die nicht im Video vorkamen (Halluzinationen), und ob Trends aktuell sind. |
+| **M (Messbar)** | **Recall (Sensitivität):** 100% Erkennung von absichtlich eingefügten Halluzinationen in einem Test-Set. <br> **Precision:** < 10% False Positives (fälschliches Ablehnen von gutem Content). |
+| **A (Erreichbar)** | Durch Wort-für-Wort-Abgleich mit der `Video Analysis` und `google_search` Verifizierung. |
+| **R (Relevant)** | Schützt die Markenreputation und verhindert die Verbreitung von Fehlinformationen. |
+| **T (Zeitgebunden)** | Vollständige Evaluation **unter 5 Sekunden**. |
+
+---
+
+## 5. Gesamtsystem (End-to-End Performance)
+**Ziel:** Effiziente Orchestrierung und stabile Ausführung.
+
+| Kriterium | Beschreibung |
+| :--- | :--- |
+| **S (Spezifisch)** | Der gesamte Pipeline-Durchlauf vom Video-Input zum finalen, approvten Content. |
+| **M (Messbar)** | **Durchlaufzeit:** < 30 Sekunden für den gesamten Prozess (inkl. möglicher Retry-Loops). <br> **Robustheit:** < 1% Systemabstürze oder Timeout-Fehler bei 100 Testläufen. |
+| **A (Erreichbar)** | Durch asynchrone Verarbeitung und effizientes Prompt-Engineering. |
+| **R (Relevant)** | Sicherstellung der Skalierbarkeit für den produktiven Einsatz. |
+| **T (Zeitgebunden)** | Erreichung dieser Metriken bis zum Datum der Abgabe. |
+</file>
+
+<file path="root_agent/test/msg.py">
+import sys
+import os
+import asyncio
+import json
+from google.genai import types
+
+# 1. Path Setup: Go up 2 levels (../../)
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+sys.path.append(root_dir)
+
+# 2. Import your REAL Runner
+try:
+    from root_agent.agent import root_agent
+    from google.adk import Runner
+    # Check if InMemorySessionService is exposed at top level, otherwise import from subpackage
+    try:
+        from google.adk.sessions.in_memory_session_service import InMemorySessionService
+    except ImportError:
+         print("[WARN] Could not import InMemorySessionService from subpackage, trying top level...")
+         from google.adk import InMemorySessionService # Fallback attempt
+         
+    print("[OK] Module 'root_agent' successfully loaded.")
+except ImportError as e:
+    print(f"[ERROR] Import Error. Path: {root_dir}")
+    print(f"Detail: {e}")
+    sys.exit(1)
+
+# Initialize Runner
+# Using InMemorySessionService for testing
+session_service = InMemorySessionService()
+runner = Runner(agent=root_agent, session_service=session_service)
+
+async def run_single_test(test_case):
+    """Executes a single test case."""
+    user_input = test_case['user_input']
+    test_id = test_case['test_case_id']
+    expected = test_case.get('expected_check', {})
+
+    print(f"\n[TEST]: {test_id}")
+    print(f"   Input: '{user_input[:50]}...'")
+
+    # Start Session
+    try:
+        session = await runner.session_service.create_session(
+             user_id='eval_bot'
+        )
+    except Exception as e:
+         print(f"   [ERROR] Session Creation Failed: {e}")
+         return False
+
+    context = user_input
+    
+    # Run Agent
+    print("   [WAIT] Agent working (Video Analysis -> Strategy -> Creation -> Evaluation)...")
+    try:
+        # Run async
+        # Runner.run returns a RunResponse object which likely has .text or .content
+        response = await runner.run(
+            user_id='eval_bot',
+            session_id=session.id,
+            input=context
+        )
+    except Exception as e:
+        print(f"   [ERROR] Start Error: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+    final_payload = None
+    
+    # Process Response
+    print(f"   [DEBUG] Raw Response Type: {type(response)}")
+    
+    # If response is a string, try to parse
+    if isinstance(response, str):
+         text = response.strip()
+         if text.startswith("{") and text.endswith("}"):
+             try:
+                 final_payload = json.loads(text)
+             except:
+                 pass
+    # If response is an object with .content or .text
+    elif hasattr(response, 'text'):
+         text = response.text.strip()
+         if text.startswith("{") and text.endswith("}"):
+             try:
+                 final_payload = json.loads(text)
+             except:
+                 pass
+    elif hasattr(response, 'content'):
+          # Check if content is string or object
+          if isinstance(response.content, str):
+               try:
+                   final_payload = json.loads(response.content)
+               except:
+                   pass
+          
+    if not final_payload and isinstance(response, dict):
+        final_payload = response
+
+    if not final_payload:
+        print("   [WARN] No structured JSON response received.")
+        try:
+             print(f"   [INFO] Response dump: {response}")
+        except:
+             pass
+        return False
+
+    # --- SMART GOAL VALIDATION ---
+    print("   [CHECK] Validating SMART Goals...")
+    passed = True
+    
+    # Keys depend on how the sequential agent merges outputs.
+    # Usually it returns the output of the *last* agent.
+    # Last agent is 'creation_evaluation_loop'.
+    # It returns 'evaluation_result' (if success) or 'creative_output' (if it exits early?)
+    
+    evaluation = final_payload.get('evaluation_result')
+    creative = final_payload.get('creative_output')
+    
+    # Check what we actually have
+    if not creative and 'creative_output' in str(final_payload):
+         # Maybe nested?
+         pass
+
+    if not creative:
+         print("   [FAIL] No Creative Output generated.")
+         passed = False
+    else:
+        # SMART Goal: Caption Length < 280
+        caption = creative.get('caption', '')
+        if len(caption) > 280:
+             print(f"   [FAIL] Caption too long ({len(caption)} chars > 280).")
+             passed = False
+        else:
+             print(f"   [PASS] Caption length ok ({len(caption)}).")
+             
+        # SMART Goal: Hashtags >= 5
+        hashtags = creative.get('hashtags', [])
+        if len(hashtags) < expected.get('min_hashtags', 5):
+             print(f"   [FAIL] Too few hashtags ({len(hashtags)} < {expected.get('min_hashtags', 5)}).")
+             passed = False
+        else:
+             print(f"   [PASS] Hashtag count ok ({len(hashtags)}).")
+
+    # SMART Goal: Evaluator Score
+    if evaluation:
+        score = evaluation.get('overall_rating')
+        if score:
+            print(f"   [PASS] Content Evaluated (Score: {score}/10).")
+            if score < 7:
+                 print("   [WARN] Score < 7, but loop exited.")
+        else:
+             print("   [WARN] Evaluation record found but no score.")
+    else:
+         print("   [INFO] Note: No explicit 'evaluation_result' block in final output.")
+
+    if passed:
+        print("   [SUCCESS] ALL SMART GOALS MET")
+    else:
+        print("   [FAIL] SMART GOALS FAILED")
+
+    return passed
+
+async def main():
+    print(">>> Starting InsightBench Evaluation (SMART Goals Check)")
+    print("---------------------------------------------------------")
+    
+    json_path = os.path.join(os.path.dirname(__file__), "scenarios_test.json")
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            test_cases = json.load(f)
+    except FileNotFoundError:
+        print(f"[ERROR] Could not find test file: {json_path}")
+        return
+
+    passed_count = 0
+    for case in test_cases:
+        if await run_single_test(case):
+            passed_count += 1
+            
+    print("\n=========================================================")
+    print(f"TOTAL RESULT: {passed_count}/{len(test_cases)} Tests passed.")
+    print("=========================================================")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+</file>
+
+<file path="root_agent/test/scenarios_test.json">
+[
+    {
+        "test_case_id": "TC01_TECH_REVIEW_FAST_PACED",
+        "description": "Analyze a fast-paced tech review video (e.g., iPhone 15 Rapid Review).",
+        "user_input": "Analyze this video: A high-energy, 60-second TikTok review of the new iPhone 15 Pro. Fast cuts every 1-2 seconds. The hook (0:00-0:03) shows the phone being dropped (shock factor). Visuals include zooming into the titanium frame and camera tests. Audio is upbeat lo-fi. The creator speaks quickly about 'USB-C at last'.",
+        "expected_check": {
+            "hook_type": "Shock",
+            "min_hashtags": 5,
+            "max_caption_len": 280
+        }
+    },
+    {
+        "test_case_id": "TC02_TRAVEL_VLOG_SLOW_PACED",
+        "description": "Analyze a slow-paced, atmospheric travel vlog (e.g., Kyoto in Autumn).",
+        "user_input": "Analyze this video: A cinematic, 30-second Reel showing autumn leaves in Kyoto. Long, stabilized takes (3-5 seconds each). No speaking, just ambient temple sounds and soft piano music. The hook is a slow-motion falling leaf landing on a stone lantern. The mood is peaceful and nostalgic.",
+        "expected_check": {
+            "hook_type": "Curiosity",
+            "min_hashtags": 5,
+            "max_caption_len": 280
+        }
+    }
+]
+</file>
+
+<file path=".gitignore">
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.env
+# Virtual environments
+.venv
+</file>
+
+<file path=".python-version">
+3.12
+</file>
+
+<file path="pyproject.toml">
+[project]
+name = "test-abgabe"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "adk>=0.0.5",
+    "google>=3.0.0",
+    "google-adk[eval]==1.16.0",
+    "google-genai==1.46.0",
+    "google-generativeai>=0.8.6",
+    "pydantic>=2.12.5",
+    "python-dotenv>=1.2.1",
+    "streamlit>=1.52.2",
+]
+</file>
+
+<file path="README.md">
+# 🚀 InsightBench: Social Media Analyse & Erstellungs-Architektur (Final)
+
+Basierend auf "INSIGHTBENCH: EVALUATING BUSINESS ANALYTICS AGENTS THROUGH MULTI-STEP INSIGHT GENERATION".
+
+## 1. Projektübersicht
+
+Ein Multi-Agenten-System, das darauf ausgelegt ist, Social-Media-Inhalte zu optimieren, indem tiefe Einblicke (Insights) anstatt nur oberflächlicher Daten generiert werden. Das System nutzt eine Pipeline von **Deskriptiver**, **Diagnostischer**, **Prädiktiver** und **Präskriptiver** Analytik.
+
+## 2. Die "InsightBench" Agenten-Pipeline
+
+### Schritt 1: Video Analyst Agent (Der Beobachter)
+
+- **Modell**: `gemini-2.0-flash`
+- **Rolle**: Extraktion der Datenstruktur (Schema).
+- **Kernaufgabe**: Erfasst nicht nur visuelle Eindrücke, sondern extrahiert statistische Eckpunkte: Einzigartige visuelle Elemente, Szenenlängen und die Verteilung der ersten 3 Sekunden (Hook).
+- **Output**: Formulierung von **3 Root Questions** (Kernfragen), die speziell auf die Retentions-Logik abzielen.
+
+### Schritt 2: Insight Extractor Agent (Der Analyst)
+
+- **Modell**: `gemini-2.0-flash`
+- **Rolle**: Durchführung einer **Multi-Step-Analyse** zur Vermeidung oberflächlicher Ergebnisse.
+- **Mechanismus (Drill-Down)**: Zu jeder beantworteten Root Question generiert dieser Agent automatisch **n Follow-up Fragen**, um tieferliegende Muster zu finden. **Hinweis:** Dieser Agent arbeitet jetzt rein basierend auf der Video-Analyse, ohne externe Trend-Daten (TrendScout entfernt).
+- **Analyse-Level**:
+  - _Deskriptiv_: Was passiert im Video?
+  - _Diagnostisch_: Warum funktioniert der Hook?
+  - _Prädiktiv_: Was wird passieren (Viralität)?
+  - _Präskriptiv_: Welche konkreten Handlungsempfehlungen gibt es?
+
+### Schritt 3: Creator Agent (Der Künstler)
+
+- **Modell**: `gemini-2.5-pro` (Maximale kreative Tiefe)
+- **Rolle**: Synthetisierung der **Präskriptiven Insights** in Captions und Hashtags.
+- **Anforderung**: Übersetzung der strategischen Winkel in emotionalen Content, der genau auf den identifizierten Insight eingeht.
+
+### Schritt 4: Evaluator Agent (Der numerische Richter)
+
+- **Modell**: `gemini-1.5-flash` + **Google Search**
+- **Rolle**: Qualitätssicherung durch das **LLaMA-3-Eval Protokoll**.
+- **Numerisches Rating (Anti-Halluzination)**: Der Agent vergibt ein **Rating von 1-10** basierend auf der Nähe des Entwurfs zum Video-Inhalt (Ground Truth).
+  - **10**: Faktisch perfekt und trend-aktuell.
+  - **< 7**: Signal zur Überarbeitung (Loop), falls Halluzinationen oder Abweichungen erkannt werden.
+- **Validierung**: Nutzung von Google Search zur Verifizierung von Fakten und Trend-Aktualität.
+
+## 3. Erfolgskennzahlen (S.M.A.R.T.)
+
+1.  **Insight-Tiefe**: Mindestens 1 valider Punkt pro Analyse-Kategorie.
+2.  **Präzision**: LLaMA-3-Eval Score von durchschnittlich > 8.0 für freigegebene Posts.
+3.  **Effizienz**: Abschluss der Analysezyklen ohne unnötiges Overengineering durch stabilisierte Prompts (Temperatur 0.0).
+
+---
+</file>
+
+<file path="root_agent/__init__.py">
+from . import agent
+</file>
+
+<file path="root_agent/.gitignore">
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.env
+# Virtual environments
+.venv
+</file>
+
+<file path="root_agent/agent.py">
+"""
+InsightBench Multi-Agent System
+================================
+A multi-agent pipeline for Social Media Analytics based on the InsightBench framework.
+
+Pipeline:
+  1. Video Analyst Agent      (gemini-2.0-flash)  – Schema extraction & Root Questions
+  2. Insight Extractor Agent  (gemini-2.0-flash)  – Multi-step drill-down analysis
+  3. Creator Agent            (gemini-2.5-pro)    – Prescriptive creative synthesis
+  4. Evaluator Agent          (gemini-2.0-flash)  – Quality assurance (LLaMA-3-Eval protocol)
+
+The Creator + Evaluator are wrapped in a LoopAgent to retry if the score < 7.
+The overall pipeline is orchestrated by a SequentialAgent.
+"""
+
+from typing import Dict, Any, List, Optional
+from pydantic import BaseModel, Field
+from google.adk.agents import Agent, SequentialAgent, LoopAgent
+from google.adk.tools import google_search
+
+
+# ============================================================================
+# PYDANTIC SCHEMAS
+# ============================================================================
+
+# --- Video Analyst Agent ---
+class SchemaExtraction(BaseModel):
+    """Extracted content structure from the video."""
+    scene_length: str = Field(description="Scene length – Fast cuts or long takes?")
+    hook_type: str = Field(description="Hook type – What happens in the first 3 seconds? (Question, Shock, Curiosity, Statement, Visual stimulus)")
+    visual_frequency: str = Field(description="Visual frequency – How often do visual elements change?")
+    unique_visual_elements: str = Field(description="Unique visual elements – What makes this content stand out visually?")
+
+
+class VideoAnalysisSchema(BaseModel):
+    """Output schema for the Video Analyst Agent."""
+    schema_extraction: SchemaExtraction = Field(description="Extracted data structure of the content.")
+    root_questions: List[str] = Field(description="Exactly 3 Root Questions targeting retention optimization.", min_length=3, max_length=3)
+
+
+# --- Insight Extractor Agent ---
+class AnalysisLevels(BaseModel):
+    """The 4 analysis levels for each Root Question."""
+    descriptive: str = Field(description="Descriptive: What was shown exactly?")
+    diagnostic: str = Field(description="Diagnostic: Why does this moment captivate?")
+    predictive: str = Field(description="Predictive: What retention rate is expected?")
+    prescriptive: str = Field(description="Prescriptive: What change would maximize success?")
+
+
+class FollowUpQuestion(BaseModel):
+    """A follow-up question and its answer."""
+    question: str = Field(description="The follow-up question.")
+    answer: str = Field(description="The answer to the follow-up question.")
+
+
+class RootQuestionAnalysis(BaseModel):
+    """Complete analysis for a single Root Question."""
+    root_question: str = Field(description="The Root Question being analyzed.")
+    answer: str = Field(description="Direct answer to the Root Question.")
+    follow_up_questions: List[FollowUpQuestion] = Field(description="4 Follow-up Questions with answers.", min_length=4, max_length=4)
+    analysis_levels: AnalysisLevels = Field(description="Analysis across 4 levels.")
+
+
+class StrategySchema(BaseModel):
+    """Output schema for the Insight Extractor Agent."""
+    most_engaging_element: str = Field(description="The single most engaging element identified.")
+    hook_strategy: str = Field(description="How to stop the scroll in the first 3 seconds.")
+    psychological_angle: str = Field(description="Why will people share this? (Humor, Shock, Relatability?)")
+    root_question_analyses: List[RootQuestionAnalysis] = Field(description="Drill-down analysis for each Root Question.", min_length=3, max_length=3)
+    prescriptive_summary: str = Field(description="Summary of all Prescriptive Insights.")
+
+
+# --- Creator Agent ---
+class HashtagStrategy(BaseModel):
+    """A single strategic hashtag with its reasoning."""
+    hashtag: str = Field(description="The hashtag (including #).")
+    strategy: str = Field(description="Strategic reasoning for this hashtag.")
+
+
+class CreatorOutputSchema(BaseModel):
+    """Output schema for the Creator Agent."""
+    caption: str = Field(description="The social media caption (max 280 characters).", max_length=280)
+    hashtags: List[HashtagStrategy] = Field(description="5 strategic hashtags with reasoning.", min_length=5, max_length=5)
+
+
+# --- Evaluator Agent ---
+class EvaluationCriterion(BaseModel):
+    """A single evaluation criterion with score and reasoning."""
+    criterion: str = Field(description="Name of the criterion.")
+    score: int = Field(description="Score for this criterion (1-10).", ge=1, le=10)
+    reasoning: str = Field(description="Reasoning for the score.")
+
+
+class EvaluationSchema(BaseModel):
+    """Output schema for the Evaluator Agent."""
+    overall_rating: int = Field(description="Overall rating from 1 to 10.", ge=1, le=10)
+    criteria: List[EvaluationCriterion] = Field(
+        description="Individual scores for: Factual Accuracy, Trend Relevance, Strategic Depth, Creative Originality, Anti-Hallucination.",
+        min_length=5,
+        max_length=5,
+    )
+    justification: str = Field(description="Detailed justification for the overall rating.")
+    approved: bool = Field(description="True if score >= 7 (APPROVED), False if < 7 (NEEDS_REVISION).")
+    feedback: Optional[str] = Field(default=None, description="Concrete improvement suggestions if NEEDS_REVISION.")
+
+
+# ============================================================================
+# TOOLS
+# ============================================================================
+
+def exit_loop(tool_context) -> dict:
+    """Call this function ONLY when you APPROVE the content (score >= 7).
+    This will exit the creation-evaluation loop and finalize the process."""
+    tool_context.actions.escalate = True
+    return {"status": "Loop exited. Content approved and finalized."}
+
+
+def calculate_engagement(likes: int, comments: int, shares: int, saves: int, reach: int) -> Dict[str, Any]:
+    """
+    Calculates a weighted engagement rate and provides a qualitative assessment.
+
+    Formula: ((Likes * 1) + (Comments * 2) + (Shares * 3) + (Saves * 3)) / Reach * 100
+
+    Args:
+        likes: Number of likes.
+        comments: Number of comments.
+        shares: Number of shares.
+        saves: Number of saves.
+        reach: Total reach or unique views.
+
+    Returns:
+        dict: A dictionary containing the numeric 'rate', a string 'assessment', and 'details'.
+    """
+    if reach == 0:
+        return {
+            "rate": 0.0,
+            "assessment": "Error (Zero Reach)",
+            "details": "Reach cannot be zero."
+        }
+
+    weighted_interactions = (likes * 1) + (comments * 2) + (shares * 3) + (saves * 3)
+    score = (weighted_interactions / reach) * 100
+
+    assessment = "Needs Optimization"
+    if score > 10:
+        assessment = "Viral Potential! 🔥"
+    elif score > 5:
+        assessment = "Good Performance 👍"
+
+    return {
+        "rate": round(score, 2),
+        "assessment": assessment,
+        "details": f"Weighted Score: {score:.2f}% (Likes: {likes}, Comments: {comments}, Shares: {shares}, Saves: {saves})"
+    }
+
+
+# ============================================================================
+# Sub-Agent 1: Video Analyst (Schema Extraction & Root Questions)
+# ============================================================================
+video_analyst_agent = Agent(
+    model="gemini-2.0-flash",
+    name="video_analyst_agent",
+    description="Extracts the data structure of social media content and formulates Root Questions for retention optimization.",
+    instruction="""
+<context>
+You are an advanced Computer Vision and Audio Analysis AI Agent in a multi-agent system.
+Your task is to transform video input (or descriptions) into structured data that serves as
+a "Schema" for subsequent analyses.
+Goal: Identify patterns that favor a drop-off rate below 20% (SMART goal).
+</context>
+
+<role>
+Senior Computer Vision Engineer & Data Annotator.
+Focus: Object detection, OCR, sentiment analysis, and audio classification.
+Attitude: Clinical, objective, precise – you describe observable reality without artistic interpretation.
+</role>
+
+<specifications>
+1. **Hook Focus (SMART Goal):** Analysis of the first 3 seconds is your highest priority.
+2. **Schema Extraction:** For `schema_extraction`, fill in:
+   - `scene_length`: Fast cuts or long takes?
+   - `hook_type`: What happens in the first 3 seconds? (Question, Shock, Curiosity, Statement, Visual stimulus)
+   - `visual_frequency`: How often do visual elements change?
+   - `unique_visual_elements`: What makes this content stand out visually?
+3. **Root Questions:** Formulate exactly 3 Root Questions targeting retention optimization:
+   - Question 1: Why does this content succeed or fail?
+   - Question 2: What potential trends does this relate to?
+   - Question 3: How can this be optimized?
+4. **Clinical Style:** No human conversation, only structured data output.
+5. **Precision:** Your data extraction must be detailed enough to outperform any standard agent.
+</specifications>
+
+You MUST respond with valid JSON matching the output schema. Do NOT include any text outside the JSON.
+""",
+    output_key="video_analysis",
+    output_schema=VideoAnalysisSchema,
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+)
+
+# ============================================================================
+# Sub-Agent 2: Insight Extractor (Multi-Step Drill-Down)
+# ============================================================================
+insight_extractor_agent = Agent(
+    model="gemini-2.0-flash",
+    name="insight_extractor_agent",
+    description="Synthesizes analysis into a content strategy via multi-step drill-down.",
+    instruction="""
+<context>
+You are the Strategist. You sit between the Analyst (Video Data) and the Creator (Content).
+You receive:
+1. Video Analysis from the previous agent: {video_analysis}
+</context>
+
+<objective>
+Synthesize the video analysis into a cohesive Content Strategy.
+DO NOT write the caption yourself. Define the *angle* and strategy.
+</objective>
+
+<steps>
+1. Identify the single `most_engaging_element` from the video data.
+2. Define `hook_strategy`: How to stop the scroll in the first 3 seconds.
+3. Define `psychological_angle`: Why will people share this? (Humor, Shock, Relatability?)
+4. For each of the 3 Root Questions from the video analysis, perform a **Drill-Down**:
+   - Answer the root question directly.
+   - Generate exactly 4 follow-up questions with answers.
+   - Analyze across 4 levels:
+     * **Descriptive**: What was shown exactly?
+     * **Diagnostic**: Why does this moment captivate?
+     * **Predictive**: What retention rate is expected?
+     * **Prescriptive**: What concrete change would maximize success?
+5. Write a `prescriptive_summary` combining all prescriptive insights.
+</steps>
+
+You MUST respond with valid JSON matching the output schema. Do NOT include any text outside the JSON.
+""",
+    output_key="insights",
+    output_schema=StrategySchema,
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+)
+
+# ============================================================================
+# Sub-Agent 3: Creator (Prescriptive Creative Synthesis)
+# ============================================================================
+creator_agent = Agent(
+    model="gemini-2.5-pro",
+    name="creator_agent",
+    description="Generates social media captions and strategy.",
+    instruction="""
+<context>
+You are a specialized Social Media Content Creator AI. You receive structured data from a Video Analyst.
+Your world is defined by viral trends, engagement metrics, and platform algorithms.
+You have access to Google Search for real-time trend research.
+
+**Input:**
+- Insights from the Insight Extractor: {insights}
+- If this is a revision round, check the conversation history for the Evaluator's feedback and incorporate it.
+</context>
+
+<objective>
+Transform analytical data into a high-engagement social media post. Your goal is to maximize
+"Stop Ratio" (Hook) and "Engagement" (Comments/Shares) by leveraging trends and expert knowledge.
+</objective>
+
+<mode>
+Role: Gen-Z Social Media Manager & Growth Hacker.
+Expertise: Copywriting, Hashtag Strategy, Viral Psychology.
+</mode>
+
+<people_of_interest>
+The Audience: Short-form video consumers (Gen Z / Millennials). They have minimal attention spans.
+The Client: A content creator who wants growth, not excuses.
+</people_of_interest>
+
+<attitude>
+Tone: Authentic, relatable, trend-aware.
+Behavior: Proactive (searching for trends), Creative (writing hooks), and Strategic (picking times).
+NO "Corporate AI" speak (e.g., "Unlock your potential"). Use slang naturally.
+</attitude>
+
+<smart_goal>
+   **Goal (Execution):**
+   *   **S (Specific):** Create a caption + hashtags that directly address the identified insight.
+   *   **M (Measurable):** < 280 characters (for short-form), > 3 hashtags.
+   *   **A (Achievable):** Use copywriting best practices.
+   *   **R (Relevant):** Translate the analysis into actionable content.
+   *   **T (Time-bound):** Immediate generation after receiving insights.
+</smart_goal>
+
+<question_protocol>
+   *   **Start:** "How do I package this insight emotionally?"
+   *   **End:** "Would I share this myself?"
+</question_protocol>
+
+<specifications>
+1. **Tool Usage (Trend Research):** You MUST call `google_search` to find *current* viral trends (e.g., "trending tiktok sounds [niche]").
+2. **Drafting Process:** Combine Input Data + Google Trends to write the Hook and Caption.
+3. **Constraint:** Do not invent details not in the input. Stay grounded in the video's reality.
+4. **Chain of Thought:** Think inside <thinking_process> before producing the final output.
+</specifications>
+
+<output_format>
+## Trend Research
+List each trend you found via Google Search:
+- Trend: [What you found]
+- Trend: [What you found]
+
+## Caption
+[Your Caption here – max 280 characters]
+
+## Strategic Hashtags
+1. #[Hashtag] – Strategy: [Why this hashtag]
+2. #[Hashtag] – Strategy: [Why this hashtag]
+3. #[Hashtag] – Strategy: [Why this hashtag]
+4. #[Hashtag] – Strategy: [Why this hashtag]
+5. #[Hashtag] – Strategy: [Why this hashtag]
+
+## Strategic Justification
+[Why this caption and hashtags embody the logic – reference your trend research above]
+</output_format>
+""",
+    tools=[google_search],
+    output_key="creative_output",
+)
+
+# ============================================================================
+# Sub-Agent 4: Evaluator (Quality Assurance – LLaMA-3-Eval Protocol)
+# ============================================================================
+evaluator_agent = Agent(
+    model="gemini-2.0-flash",
+    name="evaluator_agent",
+    description="Validates content for facts, trends, and safety. Scores 1-10.",
+    instruction="""
+<context>
+You are a STRICT Quality Assurance Auditor and Devil's Advocate. Your default stance is SKEPTICAL.
+You assume the content is FLAWED until proven otherwise. You receive Draft Content from the Creator Agent.
+
+**Your Mindset:** You are protecting a brand's reputation. One bad post can cause irreversible damage.
+Your job is to FIND problems, not to confirm quality. If you cannot find a clear problem, look harder.
+
+**Input:**
+- Original Video Analysis (Ground Truth): {video_analysis}
+- Generated Insights: {insights}
+- Creative Output (Caption & Hashtags): {creative_output}
+</context>
+
+<objective>
+DECONSTRUCT the content. Compare every word in the caption against the Ground Truth (video_analysis).
+If the Creator added ANYTHING not present in the original analysis, that is a hallucination → automatic fail.
+You MUST use `google_search` to verify at least 2 claims before making any rating decision.
+</objective>
+
+<mandatory_verification>
+**BEFORE you assign any score, you MUST complete these steps:**
+1. Call `google_search` to verify the PRIMARY claim or topic in the caption.
+2. Call `google_search` to verify at least ONE hashtag is currently trending (not outdated).
+3. Compare the caption word-by-word against {video_analysis} – flag any detail not in the original.
+If you skip any of these steps, your evaluation is INVALID.
+</mandatory_verification>
+
+<red_flags>
+**Automatic score < 7 if ANY of these are detected:**
+- Caption mentions facts, stats, or details NOT present in {video_analysis} → HALLUCINATION
+- Hashtags that are generic (#fyp, #viral) without niche-specific tags → LAZY
+- Caption is vague or could apply to any video → NOT SPECIFIC ENOUGH
+- Caption exceeds 280 characters → FORMAT VIOLATION
+- Fewer than 5 hashtags with strategic reasoning → INCOMPLETE
+- Caption uses "Corporate AI" language ("Unlock", "Elevate", "Journey") → TONE VIOLATION
+- Trends referenced are older than 30 days based on google_search results → OUTDATED
+</red_flags>
+
+<rating_scale>
+**Default starting score: 5 (mediocre). The Creator must EARN points above 5.**
+- **10**: Every fact verified, trending hashtags confirmed via search, creative angle is unique. RARE.
+- **8-9**: Strong content with minor phrasing improvements possible.
+- **7**: Minimum acceptable. All facts check out but lacks creative spark.
+- **5-6**: Mediocre. Generic content, unverified claims, or weak hashtag strategy.
+- **3-4**: Poor. Contains hallucinations or factual errors.
+- **1-2**: Completely wrong. Major misinformation or off-topic.
+
+**IMPORTANT: A score of 7+ should be the EXCEPTION, not the default.**
+Most first drafts deserve a 4-6. Be honest, not kind.
+</rating_scale>
+
+<smart_goal>
+   **Goal (Quality Assurance):**
+   *   **S (Specific):** Validate facts and trend relevance via Google Search.
+   *   **M (Measurable):** 100% fact-check rate for all claimed facts.
+   *   **A (Achievable):** Use external sources for verification.
+   *   **R (Relevant):** Protects against "hallucinations" and outdated trends.
+   *   **T (Time-bound):** Complete check before finalization.
+</smart_goal>
+
+<critical_stage_transition>
+**TOOL USAGE RULES:**
+- If score >= 7: Call the `exit_loop` tool to finalize. Do NOT just say "Approved" – you MUST call the tool.
+- If score < 7: Do NOT call `exit_loop`. Provide SPECIFIC, ACTIONABLE feedback:
+  * Quote the exact problematic text from the caption.
+  * State what is wrong (hallucination / outdated / generic / etc.).
+  * Suggest a concrete replacement or fix.
+</critical_stage_transition>
+
+<output_format>
+## Evaluation (LLaMA-3-Eval Protocol)
+
+### Google Search Verification:
+- Claim checked: "[exact claim]" → Result: [TRUE/FALSE/UNVERIFIABLE]
+- Hashtag checked: "#[hashtag]" → Result: [TRENDING/OUTDATED/NOT FOUND]
+
+### Rating: [X]/10
+
+### Evaluation Criteria:
+- **Factual Accuracy (Ground Truth):** [Score]/10 – [Quote from caption vs. what video_analysis says]
+- **Trend Relevance:** [Score]/10 – [Google Search evidence]
+- **Strategic Depth:** [Score]/10 – [Is the insight specific or generic?]
+- **Creative Originality:** [Score]/10 – [Would this stop a scroll? Why/why not?]
+- **Anti-Hallucination:** [Score]/10 – [Any detail NOT in video_analysis?]
+
+### Justification:
+[Detailed justification with specific evidence]
+
+### STATUS: [APPROVED / NEEDS_REVISION]
+[If NEEDS_REVISION: Quote the exact problem → Explain why → Suggest specific fix]
+</output_format>
+""",
+    tools=[google_search, exit_loop],
+    output_key="evaluation_result",
+)
+
+# ============================================================================
+# Workflow: LoopAgent wraps Creator + Evaluator for retry logic (max 3 loops)
+# ============================================================================
+creation_evaluation_loop = LoopAgent(
+    name="creation_evaluation_loop",
+    description="Iteratively creates content and evaluates it. Loops until the Evaluator approves (calls exit_loop) or max iterations are reached.",
+    sub_agents=[creator_agent, evaluator_agent],
+    max_iterations=3,
+)
+
+# ============================================================================
+# Root Agent: SequentialAgent orchestrates the full pipeline
+# ============================================================================
+root_agent = SequentialAgent(
+    name="root_agent",
+    description="InsightBench Multi-Agent Pipeline: Video Analysis → Insight Extraction → Creative Synthesis (with evaluation loop).",
+    sub_agents=[
+        video_analyst_agent,
+        insight_extractor_agent,
+        creation_evaluation_loop,
+    ],
+)
+</file>
+
+<file path="root_agent/schemas.py">
+"""
+Pydantic Schemas for the InsightBench Multi-Agent System.
+Each schema defines the structured output format for the corresponding agent.
+"""
+
+from pydantic import BaseModel, Field
+from typing import List, Optional
+
+
+# ============================================================================
+# Schema: Video Analyst Agent
+# ============================================================================
+class SchemaExtraction(BaseModel):
+    """Extracted content structure from the video."""
+    scene_length: str = Field(description="Szenenlänge – Schnelle Cuts oder lange Takes?")
+    hook_type: str = Field(description="Hook-Typ – Was passiert in den ersten 3 Sekunden? (Frage, Schock, Neugier, Statement, visueller Reiz)")
+    visual_frequency: str = Field(description="Visuelle Frequenz – Wie oft wechseln visuelle Elemente?")
+    unique_visual_elements: str = Field(description="Einzigartige visuelle Elemente – Was hebt diesen Content visuell ab?")
+
+
+class VideoAnalysisSchema(BaseModel):
+    """Output schema for the Video Analyst Agent."""
+    schema_extraction: SchemaExtraction = Field(description="Extracted data structure of the content.")
+    root_questions: List[str] = Field(description="Exactly 3 Root Questions targeting retention optimization.", min_length=3, max_length=3)
+
+
+# ============================================================================
+# Schema: Insight Extractor Agent
+# ============================================================================
+class AnalysisLevels(BaseModel):
+    """The 4 analysis levels for each Root Question."""
+    descriptive: str = Field(description="Deskriptiv: Was wurde genau gezeigt?")
+    diagnostic: str = Field(description="Diagnostisch: Warum fesselt dieser Moment?")
+    predictive: str = Field(description="Prädiktiv: Welche Retention-Rate ist zu erwarten?")
+    prescriptive: str = Field(description="Präskriptiv: Welche Änderung maximiert den Erfolg?")
+
+
+class FollowUpQuestion(BaseModel):
+    """A follow-up question and its answer."""
+    question: str = Field(description="The follow-up question.")
+    answer: str = Field(description="The answer to the follow-up question.")
+
+
+class RootQuestionAnalysis(BaseModel):
+    """Complete analysis for a single Root Question."""
+    root_question: str = Field(description="The Root Question being analyzed.")
+    answer: str = Field(description="Direct answer to the Root Question.")
+    follow_up_questions: List[FollowUpQuestion] = Field(description="4 Follow-up Questions with answers.", min_length=4, max_length=4)
+    analysis_levels: AnalysisLevels = Field(description="Analysis across 4 levels.")
+
+
+class StrategySchema(BaseModel):
+    """Output schema for the Insight Extractor Agent."""
+    most_engaging_element: str = Field(description="The single most engaging element identified.")
+    hook_strategy: str = Field(description="How to stop the scroll in the first 3 seconds.")
+    psychological_angle: str = Field(description="Why will people share this? (Humor, Shock, Relatability?)")
+    root_question_analyses: List[RootQuestionAnalysis] = Field(description="Drill-down analysis for each Root Question.", min_length=3, max_length=3)
+    prescriptive_summary: str = Field(description="Summary of all Prescriptive Insights.")
+
+
+# ============================================================================
+# Schema: Creator Agent
+# ============================================================================
+class HashtagStrategy(BaseModel):
+    """A single strategic hashtag with its reasoning."""
+    hashtag: str = Field(description="The hashtag (including #).")
+    strategy: str = Field(description="Strategic reasoning for this hashtag.")
+
+
+class CreatorOutputSchema(BaseModel):
+    """Output schema for the Creator Agent."""
+    caption: str = Field(description="The social media caption (max 280 characters).", max_length=280)
+    hashtags: List[HashtagStrategy] = Field(description="5 strategic hashtags with reasoning.", min_length=5, max_length=5)
+    strategic_justification: str = Field(description="Why this caption and hashtags embody the 'Last Mover' logic.")
+
+
+# ============================================================================
+# Schema: Evaluator Agent
+# ============================================================================
+class EvaluationCriterion(BaseModel):
+    """A single evaluation criterion with score and reasoning."""
+    criterion: str = Field(description="Name of the criterion.")
+    score: int = Field(description="Score for this criterion (1-10).", ge=1, le=10)
+    reasoning: str = Field(description="Reasoning for the score.")
+
+
+class EvaluationSchema(BaseModel):
+    """Output schema for the Evaluator Agent."""
+    overall_rating: int = Field(description="Overall rating from 1 to 10.", ge=1, le=10)
+    criteria: List[EvaluationCriterion] = Field(
+        description="Individual scores for: Faktentreue, Trend-Aktualität, Strategische Tiefe, Kreative Originalität, Anti-Halluzination.",
+        min_length=5,
+        max_length=5,
+    )
+    justification: str = Field(description="Detailed justification for the overall rating.")
+    approved: bool = Field(description="True if score >= 7 (APPROVED), False if < 7 (NEEDS_REVISION).")
+    feedback: Optional[str] = Field(default=None, description="Concrete improvement suggestions if NEEDS_REVISION.")
+</file>
+
+<file path="txt.md">
+insight_extractor_agent = LlmAgent(
+    name="InsightExtractorAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+<context>
+You are the Strategist. You sit between the Analyst (Video Data) and the Creator (Content).
+You receive:
+1. Video Analysis (Objects, Mood, etc.)
+</context>
+
+<objective>
+Synthesize this into a cohesive **Content Strategy**. DO NOT write the caption yourself. Define the *angle*.
+</objective>
+
+<steps>
+1. Analyze the Video Data: What is the most engaging element?
+2. Define the Hook Strategy: How do we stop the scroll in the first 3 seconds?
+3. Define Psychological Angle: Why will people share this? (Humor, Shock, Relatability?)
+</steps>
+""",
+    description="Synthesizes analysis into a content strategy.",
+    output_schema=StrategySchema
+)
+
+
+from google.adk.agents import LlmAgent
+from google.adk.tools import google_search
+from ...tools.control import exit_loop
+from ...schemas import EvaluationSchema
+
+# --- Constants ---
+GEMINI_MODEL = "gemini-2.0-flash"
+
+# Create the evaluator agent
+evaluator_agent = LlmAgent(
+    name="EvaluatorAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+<context>
+You are the Quality Assurance and Fact Checker. You receive the Draft Content from the Creator Agent.
+</context>
+
+<objective>
+Validate the Generated Content against reality and trends using Google Search. Your signature is the final gatekeeper before publication.
+</objective>
+
+<smart_goal>
+   **Goal (Qualitätssicherung):**
+   *   **S (Specific):** Validiere Fakten und Trend-Aktualität via Google Search.
+   *   **M (Measurable):** 100% Faktencheck-Rate bei behaupteten Fakten.
+   *   **A (Achievable):** Nutze externe Quellen.
+   *   **R (Relevant):** Schützt vor "Halluzinationen" und veralteten Trends.
+   *   **T (Time-bound):** Check vor Finalisierung.
+</smart_goal>
+
+<question_protocol>
+   *   **Start:** "Ist diese Behauptung wahr und aktuell?"
+   *   **End:** "Ist das ready to publish?"
+</question_protocol>
+
+    **CRITICAL STAGE TRANSITION:**
+    If you APPROVE the content (approved=True), you **MUST** call the `exit_loop` tool immediately to finalize the process. 
+    Do not just say "Approved", CALL THE TOOL.
+    
+    If ANY condition fails, return `approved=False` and provide feedback.
+    
+    <approval_rules>
+    **CRITICAL: You generally APPROVE content ONLY if ALL conditions are met:**
+    1.  **Fact Integrity:** All factual claims in the caption are verified as TRUE via Google Search.
+    2.  **Trend Validity:** The hashtags/topics are confirmed as currently active/trending (not from 3 years ago).
+    3.  **Safety:** No hate speech, misinformation, or harmful advice.
+    4.  **Completeness:** Caption and Hashtags are present.
+    
+    If ANY condition fails, you return `approved=False` and provide specific feedback in `feedback`.
+    </approval_rules>
+    
+    <specifications>
+    1.  **Tool Usage:** You MUST use `GoogleSearch` to verify hashtags and specific claims.
+    2.  **Input:** Takes `content` (from CreatorAgent) and `original_context` (from VideoAnalyst).
+    3.  **Output:** Returns structured validation judgment.
+    </specifications>
+    """,
+    description="Validates content for facts, trends, and safety.",
+
+    tools=[ exit_loop]
+)
+
+"""
+Lead Scorer Agent
+
+This agent is responsible for scoring a lead's qualification level
+based on various criteria.
+"""
+
+from google.adk.agents import LlmAgent
+from google.adk.tools import google_search
+from ...schemas import CreatorOutputSchema
+
+
+# --- Constants ---
+GEMINI_MODEL = "gemini-2.5-pro"
+
+# Create the scorer agent
+creator_agent = LlmAgent(
+    name="CreatorAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+<context>
+You are a specialized Social Media Content Creator AI. You receive structured data from a Video Analyst. Your world is defined by viral trends, engagement metrics, and platform algorithms. You have access to internal niche guidelines and external real-time search.
+</context>
+
+<objective>
+Transform analytical data into a high-engagement social media post. Your goal is to maximize "Stop Ratio" (Hook) and "Engagement" (Comments/Shares) by leveraging trends and expert knowledge.
+</objective>
+
+<mode>
+Role: Gen-Z Social Media Manager & Growth Hacker.
+Expertise: Copywriting, Hashtag Strategy, Viral Psychology.
+</mode>
+
+<people_of_interest>
+The Audience: Short-form video consumers (Gen Z / Millennials). They have minimal attention spans.
+The Client: A content creator who wants growth, not excuses.
+</people_of_interest>
+
+<attitude>
+Tone: Authentic, relatable, trend-aware. 
+Behavior: Proactive (searching for trends), Creative (writing hooks), and Strategic (picking times).
+NO "Corporate AI" speak (e.g., "Unlock your potential"). Use slang naturally.
+</attitude>
+
+<style>
+Output format: **Structured Data (Pydantic)**.
+The system automatically handles the JSON formatting. You simply populate the schema fields accurately.
+</style>
+
+<smart_goal>
+   **Goal (Umsetzung):**
+   *   **S (Specific):** Erstelle eine Caption + Hashtags, die genau auf den identifizierten Insight eingehen.
+   *   **M (Measurable):** < 280 Zeichen (für Kurzform), > 3 Hashtags.
+   *   **A (Achievable):** Nutze Copywriting-Best-Practices.
+   *   **R (Relevant):** Übersetzung der Analyse in Content.
+   *   **T (Time-bound):** Sofortige Generierung nach Insight-Erhalt.
+</smart_goal>
+
+<question_protocol>
+   *   **Start:** "Wie verpacke ich diesen Insight emotional?"
+   *   **End:** "Würde ich das selbst teilen?"
+</question_protocol>
+
+<specifications>
+1. **Tool Usage (Context Retrieval):** You MUST first call `get_niche_guidelines` with the detected niche to get expert tips.
+2. **Tool Usage (Trend Research):** You MUST call `GoogleSearch` to find *current* viral trends (e.g., "trending tiktok sounds [niche]").
+3. **Drafting Process:** Combine Input Data + Niche Guidelines + Google Trends to write the Hook and Caption.
+4. **Constraint:** Do not invent details not in the input. Stay grounded in the video's reality.
+5. **Chain of Thought:** Think inside <thinking_process> before populating the final schema.
+</specifications>
+""",
+    description="Generates social media captions and strategy.",
+
+    tools=[google_search]
+)
+
+from typing import Dict, Any
+
+def calculate_engagement(likes: int, comments: int, shares: int, saves: int, reach: int) -> Dict[str, Any]:
+    """
+    Calculates a weighted engagement rate and provides a qualitative assessment.
+    
+    Formula: ((Likes * 1) + (Comments * 2) + (Shares * 3) + (Saves * 3)) / Reach * 100
+    
+    Args:
+        likes: Number of likes.
+        comments: Number of comments.
+        shares: Number of shares.
+        saves: Number of saves.
+        reach: Total reach or unique views.
+        
+    Returns:
+        dict: A dictionary containing the numeric 'rate', a string 'assessment', and 'raw_score'.
+    """
+    if reach == 0:
+        return {
+            "rate": 0.0, 
+            "assessment": "Error (Zero Reach)", 
+            "details": "Reach cannot be zero."
+        }
+    
+    # Weighted calculation
+    weighted_interactions = (likes * 1) + (comments * 2) + (shares * 3) + (saves * 3)
+    score = (weighted_interactions / reach) * 100
+    
+    assessment = "Needs Optimization"
+    if score > 10:
+        assessment = "Viral Potential! \U0001F525" # Fire emoji
+    elif score > 5:
+        assessment = "Good Performance \U0001F44D" # Thumbs up emoji
+        
+    return {
+        "rate": round(score, 2),
+        "assessment": assessment,
+        "details": f"Weighted Score: {score:.2f}% (Likes: {likes}, Comments: {comments}, Shares: {shares}, Saves: {saves})"
+    }
+</file>
+
+</files>

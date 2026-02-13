@@ -1,0 +1,23 @@
+
+[
+    {
+        "test_case_id": "TC01_TECH_REVIEW_FAST_PACED",
+        "description": "Analyze a fast-paced tech review video (e.g., iPhone 15 Rapid Review).",
+        "user_input": "Analyze this video: A high-energy, 60-second TikTok review of the new iPhone 15 Pro. Fast cuts every 1-2 seconds. The hook (0:00-0:03) shows the phone being dropped (shock factor). Visuals include zooming into the titanium frame and camera tests. Audio is upbeat lo-fi. The creator speaks quickly about 'USB-C at last'.",
+        "expected_check": {
+            "hook_type": "Shock",
+            "min_hashtags": 5,
+            "max_caption_len": 280
+        }
+    },
+    {
+        "test_case_id": "TC02_TRAVEL_VLOG_SLOW_PACED",
+        "description": "Analyze a slow-paced, atmospheric travel vlog (e.g., Kyoto in Autumn).",
+        "user_input": "Analyze this video: A cinematic, 30-second Reel showing autumn leaves in Kyoto. Long, stabilized takes (3-5 seconds each). No speaking, just ambient temple sounds and soft piano music. The hook is a slow-motion falling leaf landing on a stone lantern. The mood is peaceful and nostalgic.",
+        "expected_check": {
+            "hook_type": "Curiosity",
+            "min_hashtags": 5,
+            "max_caption_len": 280
+        }
+    }
+]

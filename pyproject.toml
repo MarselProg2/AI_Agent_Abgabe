@@ -8,7 +8,7 @@ dependencies = [
     "adk>=0.0.5",
     "google>=3.0.0",
     "google-adk[eval]==1.16.0",
-    "google-genai>=1.57.0",
+    "google-genai==1.46.0",
     "google-generativeai>=0.8.6",
     "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
