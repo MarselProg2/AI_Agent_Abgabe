@@ -1,0 +1,121 @@
+C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\cloud\aiplatform\models.py:52: FutureWarning: Support for google-cloud-storage < 3.0.0 will be removed in a future version of google-cloud-aiplatform. Please upgrade to google-cloud-storage >= 3.0.0.
+  from google.cloud.aiplatform.utils import gcs_utils
+C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\root_agent\test\msg.py:27: UserWarning: [EXPERIMENTAL] App: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  app = App(root_agent=root_agent, name="social_media_analytics_app")
+[OK] Modul 'root_agent' erfolgreich geladen.
+[START] Starte Manuellen Evaluierungs-Loop (Direct Runner Mode)
+---------------------------------------------------------
+[INFO] Loaded scenarios from: scen[OK] Modul 'root_agent' erfolgreich geladen.
+[START] Starte Manuellen Evaluierungs-Loop (Direct Runner Mode)
+---------------------------------------------------------
+
+[TEST] Test: TC01_TIKTOK_COOKING_HOOK
+   Input: 'Analyze this video: A fast-paced 15-second TikTok showing a quick pizza recipe. The first 3 seconds show melting cheese pulling apart (visual stimulus). The chef cuts the pizza rapidly. Background audio is upbeat lo-fi. The video ends with a 'Subscribe for more' text overlay.'
+   [WAIT] Agent arbeitet (Google Search )...
+   [INFO] Antwort-Vorschau: Acknowledged. The content has been approved. I will incorporate the feedback regarding creative additions and aim for higher originality in the next iteration. Ready for the next task....
+   [FAIL] STATUS: FAIL
+      Fehlende Keywords: ['Video Analyst', 'Visual stimulus', 'Creator Agent', '#pizza', 'Status: Loop exited']
+
+[TEST] Test: TC02_TECH_REVIEW_RETENTION
+   Input: 'Analyze this video: A 60-second YouTube Short reviewing the new iPhone 16. The host starts by dropping the phone (Shock hook). He talks about the new camera sensor. The middle section is static talking head. Retention usually drops there.'
+   [WAIT] Agent arbeitet (Google Search )...
+   [INFO] Antwort-Vorschau: Understood. Process finalized. Standing by for the next project....
+   [FAIL] STATUS: FAIL
+      Fehlende Keywords: ['Shock', 'Insight Extractor', 'Prescriptive', 'Evaluator Agent', 'APPROVED']
+
+[TEST] Test: TC03_TRAVEL_VLOG_MISSING_DETAILS
+   Input: 'Analyze this video: A travel vlog about Bali. It shows beaches and rice terraces.'
+   [WAIT] Agent arbeitet (Google Search )...
+   [FAIL] CRITICAL ERROR während der Ausführung: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+
+[TEST] Test: TC04_CREATOR_COMEDY_SKIT
+   Input: 'Analyze this video: A short comedy skit about 'Working from Home'. The person is wearing a suit jacket but pajama pants (Visual Gag). They mute the zoom call to scream into a pillow. The hook is the ringtone sound.'
+   [WAIT] Agent arbeitet (Google Search )...
+   [INFO] Antwort-Vorschau: ## Trend Research - Trend: Relatable work-from-home humor, specifically the "professional from the waist up" gag, is an established and consistently viral theme. - Trend: Memes and short videos that capture the shared struggles of remote work, such as burnout and distractions, continue to see high e...
+   [FAIL] STATUS: FAIL
+      Fehlende Keywords: ['Creator Agent']
+
+[TEST] Test: TC05_PENGUIN_VIDEO_ANALYSIS
+   Input: 'Analyze this video file. What animals are shown and what are they doing?'
+   [INFO] Loading video: penguin.mp4
+   [WAIT] Agent arbeitet (Google Search )...
+   [INFO] Antwort-Vorschau: Excellent. The content is approved and ready for posting....
+   [FAIL] STATUS: FAIL
+      Fehlende Keywords: ['Penguin', 'Schema', 'Strategy']
+
+=========================================================
+[RESULT] GESAMTERGEBNIS: 0/5 Tests bestanden.
+=========================================================
+ line 395, in _run_async_impl
+    async for event in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\flows\llm_flows\base_llm_flow.py", line 356, in run_async
+    async for event in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\flows\llm_flows\base_llm_flow.py", line 414, in _run_one_step_async
+    async for llm_response in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\flows\llm_flows\base_llm_flow.py", line 780, in _call_llm_async
+    async for event in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\flows\llm_flows\base_llm_flow.py", line 764, in _call_llm_with_tracing
+    async for llm_response in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\flows\llm_flows\base_llm_flow.py", line 958, in _run_and_handle_error
+    async for response in agen:
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\adk\models\google_llm.py", line 171, in generate_content_async
+    response = await self.api_client.aio.models.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\genai\models.py", line 7331, in generate_content
+    response = await self._generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\genai\models.py", line 6095, in _generate_content
+    response = await self._api_client.async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\genai\_api_client.py", line 1442, in async_request
+    result = await self._async_request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\genai\_api_client.py", line 1375, in _async_request
+    return await self._async_retry(  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 111, in __call__
+    do = await self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 153, in iter
+    result = await action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\tenacity\_utils.py", line 99, in inner
+    return call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\tenacity\__init__.py", line 398, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 114, in __call__
+    result = await fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\google\genai\_api_client.py", line 1312, in _async_request_once
+    response = await self._aiohttp_session.request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\aiohttp\client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\aiohttp\client.py", line 757, in _connect_and_send_request
+    await resp.start(conn)
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\aiohttp\client_reqrep.py", line 539, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\.venv\Lib\site-packages\aiohttp\streams.py", line 703, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\marsv\Desktop\UNI\Agentic_AI\test_abgabe\root_agent\test\msg.py", line 162, in <module>
+    asyncio.run(main())
+  File "C:\Users\marsv\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\marsv\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt

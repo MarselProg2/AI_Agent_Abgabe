@@ -1,0 +1,63 @@
+[
+    {
+        "test_case_id": "TC01_TIKTOK_COOKING_HOOK",
+        "description": "Tests the Video Analyst's ability to extract schema from a cooking TikTok.",
+        "comment": "Keywords match actual output_schema fields and agent behavior.",
+        "user_input": "Analyze this video: A fast-paced 15-second TikTok showing a quick pizza recipe. The first 3 seconds show melting cheese pulling apart (visual stimulus). The chef cuts the pizza rapidly. Background audio is upbeat lo-fi. The video ends with a 'Subscribe for more' text overlay.",
+        "expected_output_contains": [
+            "hook",
+            "scene_length",
+            "caption",
+            "hashtag"
+        ]
+    },
+    {
+        "test_case_id": "TC02_TECH_REVIEW_RETENTION",
+        "description": "Tests the Insight Extractor's drill-down analysis for a tech review.",
+        "comment": "Keywords match StrategySchema fields.",
+        "user_input": "Analyze this video: A 60-second YouTube Short reviewing the new iPhone 16. The host starts by dropping the phone (Shock hook). He talks about the new camera sensor. The middle section is static talking head. Retention usually drops there.",
+        "expected_output_contains": [
+            "hook",
+            "prescriptive",
+            "retention",
+            "caption"
+        ]
+    },
+    {
+        "test_case_id": "TC03_TRAVEL_VLOG_MISSING_DETAILS",
+        "description": "Tests the Evaluator's ability to handle vague input.",
+        "comment": "Keywords match EvaluationSchema fields.",
+        "user_input": "Analyze this video: A travel vlog about Bali. It shows beaches and rice terraces.",
+        "expected_output_contains": [
+            "score",
+            "caption",
+            "hashtag",
+            "hook"
+        ]
+    },
+    {
+        "test_case_id": "TC04_CREATOR_COMEDY_SKIT",
+        "description": "Tests the Creator Agent's humor and trend integration.",
+        "comment": "Validates that the Creator Agent picks up on the comedy aspect.",
+        "user_input": "Analyze this video: A short comedy skit about 'Working from Home'. The person is wearing a suit jacket but pajama pants (Visual Gag). They mute the zoom call to scream into a pillow. The hook is the ringtone sound.",
+        "expected_output_contains": [
+            "caption",
+            "hashtag",
+            "hook",
+            "score"
+        ]
+    },
+    {
+        "test_case_id": "TC05_PENGUIN_VIDEO_ANALYSIS",
+        "description": "Tests the pipeline with a real video file (penguin.mp4).",
+        "comment": "Checks if the Video Analyst can process the mp4 file.",
+        "user_input": "Analyze this video file. What animals are shown and what are they doing?",
+        "video_file": "penguin.mp4",
+        "expected_output_contains": [
+            "penguin",
+            "hook_type",
+            "scene_length",
+            "visual"
+        ]
+    }
+]
