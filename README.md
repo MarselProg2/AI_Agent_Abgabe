@@ -12,7 +12,7 @@ Das System nutzt eine **Sequential Agent Pipeline** mit einem integrierten **Loo
 
 ```mermaid
 graph TB
-    A["User Upload: Video"] --> B["Sequential Agent Pipeline"]
+    A["Streamlit Frontend: User Upload Video"] --> B["Sequential Agent Pipeline"]
     B --> C["Video Analyst Agent"]
     C -->|"video_analysis"| D["Insight Extractor Agent"]
     D -->|"insights"| E["Creation-Evaluation Loop"]
