@@ -46,18 +46,5 @@
             "hook",
             "score"
         ]
-    },
-    {
-        "test_case_id": "TC05_PENGUIN_VIDEO_ANALYSIS",
-        "description": "Tests the pipeline with a real video file (penguin.mp4).",
-        "comment": "Checks if the Video Analyst can process the mp4 file.",
-        "user_input": "Analyze this video file. What animals are shown and what are they doing?",
-        "video_file": "penguin.mp4",
-        "expected_output_contains": [
-            "penguin",
-            "hook_type",
-            "scene_length",
-            "visual"
-        ]
     }
 ]

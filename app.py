@@ -1,10 +1,23 @@
 import streamlit as st
 import os
 import json
+import re
 import requests
 import base64
 from typing import Optional, Dict, Any
 import uuid
+
+
+def strip_urls(text: str) -> str:
+    """Remove all URLs, hyperlinks, and markdown links from text."""
+    # Remove markdown links [text](url) → text
+    text = re.sub(r'\[([^\]]*)\]\([^)]+\)', r'\1', text)
+    # Remove raw URLs (http/https/www)
+    text = re.sub(r'https?://\S+', '', text)
+    text = re.sub(r'www\.\S+', '', text)
+    # Clean up leftover whitespace
+    text = re.sub(r'  +', ' ', text)
+    return text.strip()
 
 try:
     import sseclient
@@ -345,7 +358,7 @@ def display_agent_result(result: Any):
                 # Display Caption prominently
                 if caption:
                     st.markdown("### 💬 Caption")
-                    st.info(caption)
+                    st.info(strip_urls(caption))
                 
                 col1, col2 = st.columns(2)
                 
@@ -353,22 +366,22 @@ def display_agent_result(result: Any):
                 with col1:
                     if hashtags_section:
                         st.markdown("### 🏷️ Hashtags & Strategie")
-                        st.markdown(hashtags_section)
+                        st.markdown(strip_urls(hashtags_section))
                 
                 # Display Trend Research
                 with col2:
                     if trend_section:
                         st.markdown("### 📈 Trend Research")
-                        st.markdown(trend_section)
+                        st.markdown(strip_urls(trend_section))
                 
                 # Display Strategic Justification
                 if strategy_section:
                     st.markdown("### 🧠 Strategische Begründung")
-                    st.markdown(strategy_section)
+                    st.markdown(strip_urls(strategy_section))
                 
                 # Fallback: show full text if parsing didn't find sections
                 if not caption and not hashtags_section:
-                    st.markdown(creator_text)
+                    st.markdown(strip_urls(creator_text))
             else:
                 st.warning("Kein Creator Agent Output vorhanden.")
         
@@ -382,44 +395,48 @@ def display_agent_result(result: Any):
                 else:
                     st.error(f"**STATUS: NEEDS REVISION** — Rating: {eval_rating}/10")
                 
-                st.markdown(evaluator_text)
+                st.markdown(strip_urls(evaluator_text))
             else:
                 st.warning("Kein Evaluator Output vorhanden.")
         
         # --- TAB 3: Video Analysis + Insights ---
         with tab_analysis:
-            col_vid, col_ins = st.columns(2)
+            st.subheader("🎬 Video Analyst")
+            if video_json:
+                schema = video_json.get("schema_extraction", {})
+                st.markdown(f"**Hook Type:**  \n{schema.get('hook_type', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Scene Length:**  \n{schema.get('scene_length', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Visual Frequency:**  \n{schema.get('visual_frequency', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Unique Elements:**  \n{schema.get('unique_visual_elements', 'N/A')}")
+                st.markdown("---")
+                
+                root_qs = video_json.get("root_questions", [])
+                if root_qs:
+                    st.markdown("**Root Questions:**")
+                    for i, q in enumerate(root_qs, 1):
+                        st.markdown(f"{i}. {q}")
+            elif video_data.get("full_text"):
+                st.markdown(strip_urls(video_data["full_text"][:2000]))
+            else:
+                st.info("Keine Video-Analyse verfügbar.")
             
-            with col_vid:
-                st.subheader("🎬 Video Analyst")
-                if video_json:
-                    schema = video_json.get("schema_extraction", {})
-                    st.metric("Hook Type", schema.get("hook_type", "N/A"))
-                    st.metric("Scene Length", schema.get("scene_length", "N/A"))
-                    st.metric("Visual Frequency", schema.get("visual_frequency", "N/A"))
-                    st.markdown(f"**Unique Elements:** {schema.get('unique_visual_elements', 'N/A')}")
-                    
-                    root_qs = video_json.get("root_questions", [])
-                    if root_qs:
-                        st.markdown("**Root Questions:**")
-                        for i, q in enumerate(root_qs, 1):
-                            st.markdown(f"{i}. {q}")
-                elif video_data.get("full_text"):
-                    st.markdown(video_data["full_text"][:1000])
-                else:
-                    st.info("Keine Video-Analyse verfügbar.")
-            
-            with col_ins:
-                st.subheader("� Insight Extractor")
-                if insight_json:
-                    st.metric("Most Engaging", insight_json.get("most_engaging_element", "N/A"))
-                    st.markdown(f"**Hook Strategy:** {insight_json.get('hook_strategy', 'N/A')}")
-                    st.markdown(f"**Psychological Angle:** {insight_json.get('psychological_angle', 'N/A')}")
-                    st.markdown(f"**Prescriptive Summary:** {insight_json.get('prescriptive_summary', 'N/A')}")
-                elif insight_data.get("full_text"):
-                    st.markdown(insight_data["full_text"][:1000])
-                else:
-                    st.info("Keine Insights verfügbar.")
+            st.markdown("---")
+            st.subheader("💡 Insight Extractor")
+            if insight_json:
+                st.markdown(f"**Most Engaging Element:**  \n{insight_json.get('most_engaging_element', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Hook Strategy:**  \n{insight_json.get('hook_strategy', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Psychological Angle:**  \n{insight_json.get('psychological_angle', 'N/A')}")
+                st.markdown("---")
+                st.markdown(f"**Prescriptive Summary:**  \n{insight_json.get('prescriptive_summary', 'N/A')}")
+            elif insight_data.get("full_text"):
+                st.markdown(strip_urls(insight_data["full_text"][:2000]))
+            else:
+                st.info("Keine Insights verfügbar.")
         
         # --- TAB 4: Debug Raw ---
         with tab_raw:

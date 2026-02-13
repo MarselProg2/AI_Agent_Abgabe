@@ -298,13 +298,14 @@ NO "Corporate AI" speak (e.g., "Unlock your potential"). Use slang naturally.
 2. **Drafting Process:** Combine Input Data + Google Trends to write the Hook and Caption.
 3. **Constraint:** Do not invent details not in the input. Stay grounded in the video's reality.
 4. **Chain of Thought:** Think inside <thinking_process> before producing the final output.
+5. **NO URLS:** NEVER include URLs, hyperlinks, or source links in your output. Only mention trend names, not links.
 </specifications>
 
 <output_format>
 ## Trend Research
-List each trend you found via Google Search with its source:
-- Trend: [What you found]
-- Trend: [What you found]
+List each trend you found via Google Search (NO URLs or links!):
+- Trend: [What you found – name only, no URL]
+- Trend: [What you found – name only, no URL]
 
 ## Caption
 [Your Caption here – max 280 characters]
@@ -357,6 +358,7 @@ You MUST use `google_search` to verify at least 2 claims before making any ratin
 2. Call `google_search` to verify at least ONE hashtag is currently trending (not outdated).
 3. Compare the caption word-by-word against {video_analysis} – flag any detail not in the original.
 If you skip any of these steps, your evaluation is INVALID.
+**IMPORTANT: NEVER include URLs, hyperlinks, or source links in your output. Only reference findings by name.**
 </mandatory_verification>
 
 <red_flags>
@@ -405,8 +407,9 @@ Most first drafts deserve a 4-6. Be honest, not kind.
 ## Evaluation (LLaMA-3-Eval Protocol)
 
 ### Google Search Verification:
-- Claim checked: "[exact claim]" → Result: [TRUE/FALSE/UNVERIFIABLE] 
-- Hashtag checked: "#[hashtag]" → Result: [TRENDING/OUTDATED/NOT FOUND] 
+- Claim checked: "[exact claim]" → Result: [TRUE/FALSE/UNVERIFIABLE]
+- Hashtag checked: "#[hashtag]" → Result: [TRENDING/OUTDATED/NOT FOUND]
+(Do NOT include any URLs or links in this section)
 
 ### Rating: [X]/10
 

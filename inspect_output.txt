@@ -1,5 +1,0 @@
---- App Fields ---
-['name', 'root_agent', 'plugins', 'events_compaction_config', 'context_cache_config', 'resumability_config']
-
---- App Signature ---
-(self, /, **data: 'Any') -> 'None'
