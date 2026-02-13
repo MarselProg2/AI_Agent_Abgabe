@@ -1,10 +1,10 @@
-# 🚀 InsightBench: Social Media AI Booster
+# 🚀 Social Media Agent
 
 ![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)
 ![uv](https://img.shields.io/badge/uv-managed-430f8e.svg?style=flat&logo=python&logoColor=white)
 ![ADK](https://img.shields.io/badge/Google_ADK-1.16.0-4285F4.svg?style=flat&logo=google&logoColor=white)
 
-Ein Multi-Agenten-System basierend auf dem [InsightBench-Framework](https://arxiv.org/abs/2407.06423) und Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/), das Social-Media-Videos analysiert und optimierte Captions & Hashtags generiert.
+Ein Multi-Agenten-System basierend auf dem [InsightBench] Paper(https://arxiv.org/abs/2407.06423) und Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/), das Social-Media-Videos analysiert und optimierte Captions & Hashtags generiert.
 
 Das System nutzt eine **Sequential Agent Pipeline** mit einem integrierten **LoopAgent** für iterative Qualitätssicherung. Vier spezialisierte Agents arbeiten zusammen: Videoanalyse → Insight-Extraktion → Content-Erstellung → Evaluation (mit automatischer Feedback-Schleife).
 
@@ -26,15 +26,15 @@ graph TB
     E --> F
     H --> I["Streamlit Frontend"]
 
-    style A fill:#e1f5ff
-    style B fill:#ffe1e1
-    style C fill:#fff4e1
-    style D fill:#ffe1f5
-    style E fill:#f0e1ff
-    style F fill:#e1ffe1
-    style G fill:#ffe1e1
-    style H fill:#e1ffe1
-    style I fill:#f0f0f0
+    style A fill:#1e3a8a,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#7f1d1d,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#78350f,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#831843,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#581c87,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#14532d,stroke:#333,stroke-width:2px,color:#fff
+    style G fill:#9f1239,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#14532d,stroke:#333,stroke-width:2px,color:#fff
+    style I fill:#374151,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Video Analyst Agent (gemini-2.0-flash)
