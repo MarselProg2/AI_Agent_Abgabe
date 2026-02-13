@@ -95,10 +95,16 @@ Most first drafts deserve a 4-6. Be honest, not kind.
 
 ### Evaluation Criteria:
 - **Factual Accuracy (Ground Truth):** [Score]/10 – [Quote from caption vs. what video_analysis says]
-- **Trend Relevance:** [Score]/10 – 
+- **Trend Relevance:** [Score]/10 – [Are referenced trends current based on google_search?]
 - **Strategic Depth:** [Score]/10 – [Is the insight specific or generic?]
 - **Creative Originality:** [Score]/10 – [Would this stop a scroll? Why/why not?]
 - **Anti-Hallucination:** [Score]/10 – [Any detail NOT in video_analysis?]
+
+### 4-Level Drill-Down Validation (InsightBench Framework):
+- **Descriptive:** Does the content accurately describe what was shown in the video?
+- **Diagnostic:** Does it correctly explain WHY key moments captivate the audience?
+- **Predictive:** Are retention/engagement predictions plausible based on the data?
+- **Prescriptive:** Are the concrete recommendations actionable and data-backed?
 
 ### Justification:
 [Detailed justification with specific evidence ]
